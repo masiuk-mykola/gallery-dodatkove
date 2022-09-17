@@ -10,6 +10,11 @@ const options = [
 ];
 
 export class App extends Component {
+constructor() {
+  super()
+  this.deleteFavoriteImg = this.deleteFavoriteImg.bind(this)
+}
+
   state = {
     favoriteImg: [],
     select: null,
@@ -25,6 +30,15 @@ export class App extends Component {
       favoriteImg: [...prevState.favoriteImg, img],
     }));
   };
+
+  deleteFavoriteImg(img) {
+    this.setState(prevState => {
+      return {
+        favoriteImg: prevState.favoriteImg.filter(item => item !== img)
+      }
+    })
+
+  } 
 
   handleChangeSelect = ({ target: { value } }) => {
     this.setState({ select: value });
@@ -43,7 +57,7 @@ export class App extends Component {
             <ImagesList addImg={this.addFavoriteImg} />
           )}
           {this.state.select === 'favorite' && (
-            <FavoriteImg favoriteImg={this.state.favoriteImg} />
+            <FavoriteImg favoriteImg={this.state.favoriteImg} deleteImg={this.deleteFavoriteImg}/>
           )}
         </Container>
       </>
